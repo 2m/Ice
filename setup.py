@@ -56,6 +56,8 @@ DATA_FILES = [
   'config.txt',
   'consoles.txt',
   'emulators.txt',
+  'requirements.txt',
+  'README.md',
 ]
 
 EXCLUDE_FROM_PACKAGES = [
@@ -66,6 +68,12 @@ EXCLUDE_FROM_PACKAGES = [
 ]
 
 DEPENDENCY_LINKS = [
+]
+
+TEST_DEPS = [
+    'nose',
+    'nose-parameterized',
+    'mockito',
 ]
 
 requirements = [str(ir.req) for ir in parse_requirements('requirements.txt', session=uuid.uuid1())]
@@ -93,14 +101,11 @@ setup(
   console=[ os.path.join('ice', '__main__.py') ],
   entry_points={'console_scripts': [
   ]},
-  dependency_links = DEPENDENCY_LINKS,
+  dependency_links=DEPENDENCY_LINKS,
   install_requires=requirements,
   test_suite='nose.collector',
-  tests_require=[
-    'nose',
-    'nose-parameterized',
-    'mockito',
-  ],
+  tests_require=TEST_DEPS,
+  extras_require={'test': TEST_DEPS},
   zip_safe=False,
   classifiers=[
       'License :: OSI Approved :: MIT License',

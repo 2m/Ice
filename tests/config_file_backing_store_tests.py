@@ -77,7 +77,7 @@ class ConfigFileBackingStoreTests(unittest.TestCase):
         "Whiplash": {},
     })
     cfbs = ConfigFileBackingStore(self.tempfile)
-    self.assertEquals(cfbs.identifiers(), ["Iron Man", "Whiplash"])
+    self.assertEquals(set(cfbs.identifiers()), set(["Iron Man", "Whiplash"]))
 
   def test_added_identifiers_show_up_in_subsequent_calls(self):
     self.create_config_file(self.tempfile, {})
