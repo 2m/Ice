@@ -36,10 +36,10 @@ class ROMFinderTests(unittest.TestCase):
     when(self.mock_filesystem).files_in_directory(dirname, include_subdirectories=True).thenReturn(rom_paths)
 
     roms = self.rom_finder.roms_for_console(self.mock_config, console)
-    self.assertEquals(len(roms), 3)
+    self.assertEqual(len(roms), 3)
     for rom in roms:
       self.assertIn(rom.path, rom_paths)
-      self.assertEquals(rom.console, console)
+      self.assertEqual(rom.console, console)
 
   def test_roms_for_console_ignores_invalid_roms(self):
     dirname = "RandomDir"
@@ -51,7 +51,7 @@ class ROMFinderTests(unittest.TestCase):
     console = self._dummy_console(".txt", mock(), dirname)
     when(self.mock_filesystem).files_in_directory(dirname, include_subdirectories=True).thenReturn(rom_paths)
 
-    self.assertEquals([], self.rom_finder.roms_for_console(self.mock_config, console))
+    self.assertEqual([], self.rom_finder.roms_for_console(self.mock_config, console))
 
   def test_roms_for_consoles_returns_roms_in_subdirs(self):
     firstdir = "RandomDir"
@@ -64,7 +64,7 @@ class ROMFinderTests(unittest.TestCase):
     when(self.mock_filesystem).files_in_directory(firstdir, include_subdirectories=True).thenReturn(rom_paths)
 
     roms = self.rom_finder.roms_for_console(self.mock_config, console)
-    self.assertEquals(len(roms), 2)
+    self.assertEqual(len(roms), 2)
     [self.assertIn(rom.path, rom_paths) for rom in roms]
 
   def test_roms_for_consoles_returns_collection_of_all_roms(self):
@@ -84,14 +84,14 @@ class ROMFinderTests(unittest.TestCase):
     console2 = self._dummy_console("", mock(), seconddir)
 
     roms = self.rom_finder.roms_for_consoles(self.mock_config, [console1])
-    self.assertEquals(len(roms), 2)
+    self.assertEqual(len(roms), 2)
     for rom in roms:
       self.assertIn(rom.path, rom_paths)
-      self.assertEquals(rom.console, console1)
+      self.assertEqual(rom.console, console1)
 
     both_consoles = [console1, console2]
     roms = self.rom_finder.roms_for_consoles(self.mock_config, both_consoles)
-    self.assertEquals(len(roms), 3)
+    self.assertEqual(len(roms), 3)
     for rom in roms:
       self.assertIn(rom.path, rom_paths)
       self.assertIn(rom.console, both_consoles)
@@ -106,6 +106,6 @@ class ROMFinderTests(unittest.TestCase):
     when(self.mock_parser).parse(any(str)).thenReturn("ROM Name")
 
     roms = self.rom_finder.roms_for_console(self.mock_config, console)
-    self.assertEquals(len(roms), 1)
+    self.assertEqual(len(roms), 1)
     returned_rom = roms[0]
-    self.assertEquals(returned_rom.name, "ROM Name")
+    self.assertEqual(returned_rom.name, "ROM Name")

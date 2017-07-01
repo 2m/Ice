@@ -40,7 +40,7 @@ class ManagedROMArchiveTests(unittest.TestCase):
       f.write(json.dumps(data))
     archive = ManagedROMArchive(self.temppath)
 
-    self.assertEquals(archive.previous_managed_ids(self.mock_user), [])
+    self.assertEqual(archive.previous_managed_ids(self.mock_user), [])
 
   def test_previous_managed_ids_returns_list_from_json(self):
     data = {
@@ -53,7 +53,7 @@ class ManagedROMArchiveTests(unittest.TestCase):
       f.write(json.dumps(data))
     archive = ManagedROMArchive(self.temppath)
 
-    self.assertEquals(archive.previous_managed_ids(self.mock_user), ["1234567890","0987654321"])
+    self.assertEqual(archive.previous_managed_ids(self.mock_user), ["1234567890","0987654321"])
 
   def test_set_managed_ids_creates_new_file_if_needed(self):
     self.assertFalse(os.path.exists(self.temppath))

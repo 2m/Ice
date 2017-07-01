@@ -14,7 +14,7 @@ from ice import model
 from ice import paths
 from ice import roms
 
-from testinfra import fixtures
+from .testinfra import fixtures
 
 class ROMsTests(unittest.TestCase):
 

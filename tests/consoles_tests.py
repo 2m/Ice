@@ -7,7 +7,7 @@ from nose_parameterized import parameterized
 from ice import consoles
 from ice import model
 
-from testinfra import fixtures
+from .testinfra import fixtures
 
 class ConsolesTests(unittest.TestCase):
 

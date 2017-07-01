@@ -53,10 +53,10 @@ class FilesystemTests(unittest.TestCase):
     os.mkdir(dir1)
     dir2 = os.path.join(self.tempdir, "dir2")
     os.mkdir(dir2)
-    self.assertEquals(
-        self.filesystem.files_in_directory(
-            self.tempdir), [
-            file1, file2])
+    self.assertEqual(
+        set(self.filesystem.files_in_directory(
+            self.tempdir)), {
+            file1, file2})
 
   def test_files_in_directory_doesnt_return_hidden_files(self):
     file1 = os.path.join(self.tempdir, "bluefile")
@@ -69,10 +69,10 @@ class FilesystemTests(unittest.TestCase):
     os.mkdir(dir1)
     dir2 = os.path.join(self.tempdir, "dir2")
     os.mkdir(dir2)
-    self.assertEquals(
-        self.filesystem.files_in_directory(
-            self.tempdir), [
-            file1, file2])
+    self.assertEqual(
+        set(self.filesystem.files_in_directory(
+            self.tempdir)), {
+            file1, file2})
 
   def test_subdirectories_of_directory_asserts_when_directory_doesnt_exist(
           self):
@@ -95,10 +95,10 @@ class FilesystemTests(unittest.TestCase):
     os.mkdir(dir1)
     dir2 = os.path.join(self.tempdir, "dir2")
     os.mkdir(dir2)
-    self.assertEquals(
-        self.filesystem.subdirectories_of_directory(
-            self.tempdir), [
-            dir1, dir2])
+    self.assertEqual(
+        set(self.filesystem.subdirectories_of_directory(
+            self.tempdir)), {
+            dir1, dir2})
 
   def test_files_in_directory_ignores_subdirectories_by_default(self):
     file1 = os.path.join(self.tempdir, "file1")
@@ -110,7 +110,7 @@ class FilesystemTests(unittest.TestCase):
 
     result = self.filesystem.files_in_directory(self.tempdir)
 
-    self.assertEquals(set(result), set([file1]))
+    self.assertEqual(set(result), set([file1]))
 
   def test_files_in_directory_should_return_files_in_subdirectories_when_include_subdirectories_is_true(self):
     file1 = os.path.join(self.tempdir, "file1")
@@ -122,7 +122,7 @@ class FilesystemTests(unittest.TestCase):
 
     result = self.filesystem.files_in_directory(self.tempdir, include_subdirectories=True)
 
-    self.assertEquals(set([file1, file2]), set(result))
+    self.assertEqual(set([file1, file2]), set(result))
 
   def test_subdirectories_of_directory_should_return_subdirectories_of_subdirectories_when_recursive_is_true(self):
     dir1 = os.path.join(self.tempdir, "dir1")
@@ -130,11 +130,11 @@ class FilesystemTests(unittest.TestCase):
     dir2 = os.path.join(self.tempdir, "dir2")
     dir21 = os.path.join(dir2, "dir21")
     dirs = [dir1, dir2, dir11, dir21]
-    map(os.mkdir, dirs)
+    list(map(os.mkdir, dirs))
 
     result = self.filesystem.subdirectories_of_directory(self.tempdir, recursive=True)
 
-    self.assertEquals(set(dirs), set(result))
+    self.assertEqual(set(dirs), set(result))
 
   @parameterized.expand([
     ('/tmp/dir',  '/some/other/dir',  '/tmp/dir/some/other/dir'),

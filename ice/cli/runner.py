@@ -9,7 +9,7 @@ import argparse
 
 from pysteam.steam import get_steam, Steam
 
-import tasks
+from . import tasks
 
 from ice import decorators
 from ice import debug

@@ -28,4 +28,4 @@ class ROMFinderTests(unittest.TestCase):
     # ("Super Mario World 2 - Yoshi's Island Rev 1 (1995)(Nintendo)(US).sfc", "Super Mario World 2 - Yoshi's Island"),
   ])
   def test_parsing(self, input, expected):
-    self.assertEquals(expected, self.parser.parse(input))
+    self.assertEqual(expected, self.parser.parse(input))

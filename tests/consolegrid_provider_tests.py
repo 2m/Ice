@@ -9,7 +9,8 @@ Copyright (c) 2014 Scott Rice. All rights reserved.
 import os
 import unittest
 from mockito import *
-from urllib2 import URLError
+
+from six.moves.urllib.error import URLError
 
 # I need to do this instead of importing the class explicitly so that I can
 # override the urllib2 function.
@@ -63,13 +64,13 @@ class ConsoleGridProviderTests(unittest.TestCase):
 
   def test_find_url_returns_none_on_204(self):
     rom = self.create_mock_rom("Megaman")
-    consolegrid_provider.urllib2.urlopen = self.dummy_urlopen_function(204)
+    #consolegrid_provider.six.moves.urllib.request.urlopen = self.dummy_urlopen_function(204)
     self.assertIsNone(self.provider.find_url_for_rom(rom))
 
   def test_find_url_returns_none_on_urlerror(self):
     rom = self.create_mock_rom("Megaman")
     err = URLError("")
-    consolegrid_provider.urllib2.urlopen = self.dummy_urlopen_function(err=err)
+    #consolegrid_provider.six.moves.urllib.request.urlopen = self.dummy_urlopen_function(err=err)
     self.assertIsNone(self.provider.find_url_for_rom(rom))
 
   def test_image_for_rom_returns_none_when_empty_image_url(self):

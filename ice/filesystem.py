@@ -39,17 +39,17 @@ class RealFilesystem(object):
 
   def files_in_directory(self, directory, include_subdirectories=False):
     assert self.is_directory(directory), "Must specify a directory"
-    return filter(
+    return list(filter(
       os.path.isfile,
       self._paths_in_directory(directory, incl_subdirs=include_subdirectories),
-    )
+    ))
 
   def subdirectories_of_directory(self, directory, recursive=False):
     assert self.is_directory(directory), "Must specify a directory"
-    return filter(
+    return list(filter(
       os.path.isdir,
       self._paths_in_directory(directory, incl_subdirs=recursive),
-    )
+    ))
 
 class FakeFilesystem(object):
 

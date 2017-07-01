@@ -48,7 +48,7 @@ class CombinedProviderTests(unittest.TestCase):
     when(provider2).image_for_rom(rom).thenReturn(image2)
 
     combined_provider = CombinedProvider(provider1, provider2)
-    self.assertEquals(combined_provider.image_for_rom(rom), image1)
+    self.assertEqual(combined_provider.image_for_rom(rom), image1)
 
   def test_image_for_rom_returns_image_from_later_provider_when_first_returns_none(self):
     rom = mock()
@@ -68,7 +68,7 @@ class CombinedProviderTests(unittest.TestCase):
     when(provider3).image_for_rom(rom).thenReturn(image3)
 
     combined_provider = CombinedProvider(provider1, provider2, provider3)
-    self.assertEquals(combined_provider.image_for_rom(rom), image2)
+    self.assertEqual(combined_provider.image_for_rom(rom), image2)
 
   def test_image_for_rom_skips_disabled_providers(self):
     rom = mock()
@@ -84,4 +84,4 @@ class CombinedProviderTests(unittest.TestCase):
     when(provider2).image_for_rom(rom).thenReturn(image2)
 
     combined_provider = CombinedProvider(provider1, provider2)
-    self.assertEquals(combined_provider.image_for_rom(rom), image2)
+    self.assertEqual(combined_provider.image_for_rom(rom), image2)

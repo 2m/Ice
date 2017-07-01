@@ -2,9 +2,9 @@
 from pysteam import grid
 from pysteam import shortcuts
 
-import roms
+from . import roms
 
-from logs import logger
+from .logs import logger
 
 class SteamGridUpdater(object):
 
@@ -35,4 +35,4 @@ class SteamGridUpdater(object):
     grid.set_custom_image(user, app_id, path)
 
   def update_artwork_for_rom_collection(self, user, roms, dry_run=False):
-    map(lambda rom: self.update_rom_artwork(user, rom, dry_run=dry_run), roms)
+    list(map(lambda rom: self.update_rom_artwork(user, rom, dry_run=dry_run), roms))

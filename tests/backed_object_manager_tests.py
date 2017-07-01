@@ -45,10 +45,10 @@ class BackedObjectManagerTests(unittest.TestCase):
     shutil.rmtree(self.tempdir)
 
   def populate_backing_store(self, data):
-    for ident in data.keys():
+    for ident in list(data.keys()):
       self.backing_store.add_identifier(ident)
       ident_data = data[ident]
-      for key in ident_data.keys():
+      for key in list(ident_data.keys()):
         value = ident_data[key]
         self.backing_store.set(ident, key, value)
     self.backing_store.save()
@@ -67,13 +67,13 @@ class BackedObjectManagerTests(unittest.TestCase):
     war_machine = self.manager.find("War Machine")
 
     self.assertIsNotNone(iron_man)
-    self.assertEquals(iron_man.identifier, "Iron Man")
-    self.assertEquals(iron_man.backed_value("identity"), "Tony Stark")
+    self.assertEqual(iron_man.identifier, "Iron Man")
+    self.assertEqual(iron_man.backed_value("identity"), "Tony Stark")
 
     self.assertIsNotNone(war_machine)
-    self.assertEquals(war_machine.identifier, "War Machine")
-    self.assertEquals(war_machine.backed_value("identity"), "James Rhodes")
-    self.assertEquals(war_machine.backed_value("alias"), "Rhodey")
+    self.assertEqual(war_machine.identifier, "War Machine")
+    self.assertEqual(war_machine.backed_value("identity"), "James Rhodes")
+    self.assertEqual(war_machine.backed_value("alias"), "Rhodey")
 
   def test_all(self):
     self.populate_backing_store({
@@ -107,7 +107,7 @@ class BackedObjectManagerTests(unittest.TestCase):
   def test_find_after_set_object_for_identifier_returns_same_object_that_was_set(self):
     war_machine = BackedObject(self.backing_store, "War Machine")
     self.manager.set_object_for_identifier(war_machine, "War Machine")
-    self.assertEquals(self.manager.find("War Machine"), war_machine)
+    self.assertEqual(self.manager.find("War Machine"), war_machine)
 
   def test_all_doesnt_include_objects_where_verification_fails(self):
     self.populate_backing_store({
@@ -116,7 +116,7 @@ class BackedObjectManagerTests(unittest.TestCase):
         "Whiplash":     {},
     })
     self.adapter.verifier = lambda obj: obj.identifier.startswith("W")
-    identifiers = map(lambda obj: obj.identifier, self.manager.all())
+    identifiers = [obj.identifier for obj in self.manager.all()]
     self.assertEqual(len(identifiers), 2)
     self.assertIn("War Machine", identifiers)
     self.assertIn("Whiplash", identifiers)

@@ -18,5 +18,5 @@ class LogAppStateTask(object):
       logger.info("No users were found in Steam's userdata, so Ice has no shortcuts to set. Has anyone logged in on this computer before?")
       return
 
-    user_ids = map(lambda u: u.user_id, users)
+    user_ids = [u.user_id for u in users]
     logger.info("===== Running for users: %s =====" % ", ".join(user_ids))

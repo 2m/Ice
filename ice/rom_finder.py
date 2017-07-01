@@ -1,11 +1,11 @@
 
 from functools import partial
 
-import cache
-import consoles
-import model
+from . import cache
+from . import consoles
+from . import model
 
-from logs import logger
+from .logs import logger
 
 class ROMFinder(object):
 
@@ -30,10 +30,10 @@ class ROMFinder(object):
     logger.debug("[%s] Actually performing search for ROMs")
     paths = self.filesystem.files_in_directory(roms_directory, include_subdirectories=True)
     logger.debug("[%s] Files in ROMs directory: %s" % (console.shortname, paths))
-    valid_rom_paths = filter(partial(consoles.path_is_rom, console), paths)
+    valid_rom_paths = list(filter(partial(consoles.path_is_rom, console), paths))
     logger.debug("[%s] Filtered list of paths to ROMs: %s" % (console.shortname, valid_rom_paths))
 
-    result = map(partial(self.rom_for_path, console), valid_rom_paths)
+    result = list(map(partial(self.rom_for_path, console), valid_rom_paths))
     self.search_cache.set(roms_directory, console.fullname, result)
     return result
 
@@ -62,4 +62,4 @@ class ROMFinder(object):
     """
     # Abuses the fact that the `+` operator is overloaded with lists to turn
     # our list of lists into a single giant list. Yay for duck typing?
-    return sum(map(partial(self.roms_for_console, config), consoles), [])
+    return sum(list(map(partial(self.roms_for_console, config), consoles)), [])

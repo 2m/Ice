@@ -73,8 +73,8 @@ def DataFixture(data):
   populates the object such that calling `object.foo` will return `bar` if the
   input dictionary has a key/value pair `"foo": "bar"`."""
   # Transform keys to remove invalid characters, like ` `.
-  assert all([all([c.isalnum() or c=='_' for c in key]) for key in data.keys()]), "All dictionary keys must be valid python variable names"
-  DataPseudoClass = collections.namedtuple('DataPseudoClass', data.keys())
+  assert all([all([c.isalnum() or c=='_' for c in key]) for key in list(data.keys())]), "All dictionary keys must be valid python variable names"
+  DataPseudoClass = collections.namedtuple('DataPseudoClass', list(data.keys()))
   return DataPseudoClass(**data)
 
 emulators = DataFixture({
