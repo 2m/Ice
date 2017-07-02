@@ -21,7 +21,7 @@ class BackedObjectManager(object):
   def all(self):
     # Since not all identifiers are guaranteed to return full objects, we
     # filter out any `None` elements before returning
-    return filter(None, map(self.find, self.backing_store.identifiers()));
+    return [_f for _f in map(self.find, self.backing_store.identifiers()) if _f];
 
   def new(self, identifier):
     obj = self.adapter.new(self.backing_store, identifier)

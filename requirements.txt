@@ -1,4 +1,6 @@
 appdirs==1.2.0
 pastebin==1.1.0
 psutil==2.1.1
-pysteam==1.0.0b2
+configparser==3.5.0
+six==1.10.0
+-e git+git://github.com/2m/pysteam@v1.0.2#egg=pysteam

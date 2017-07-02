@@ -15,7 +15,7 @@ from pysteam import shortcuts
 from ice import backups
 from ice import paths
 
-from testinfra import fixtures
+from .testinfra import fixtures
 
 class BackupsTests(unittest.TestCase):
 

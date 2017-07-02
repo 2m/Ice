@@ -2,7 +2,7 @@
 
 from functools import reduce
 
-import grid_image_provider
+from . import grid_image_provider
 
 from ice.logs import logger
 
@@ -26,7 +26,7 @@ class CombinedProvider(grid_image_provider.GridImageProvider):
     self.providers = args
 
   def _enabled_providers(self):
-    return filter(lambda provider: provider.is_enabled(), self.providers)
+    return [provider for provider in self.providers if provider.is_enabled()]
 
   def is_enabled(self):
     """

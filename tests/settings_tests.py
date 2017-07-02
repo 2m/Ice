@@ -29,4 +29,4 @@ class SettingsTests(unittest.TestCase):
     config = mock()
     config.provider_spec = spec
     result = settings.image_provider(config)
-    self.assertEqual(classes, map(lambda p: p.__class__, result.providers))
+    self.assertEqual(classes, [p.__class__ for p in result.providers])

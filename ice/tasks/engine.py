@@ -24,7 +24,7 @@ class TaskEngine(object):
     # We want to ignore the anonymous context, cause theres no reason to sync
     # ROMs for it since you cant log in as said user.
     is_user_context = lambda context: context.user_id != 'anonymous'
-    self.users = filter(is_user_context, steam_module.local_user_contexts(self.steam))
+    self.users = list(filter(is_user_context, steam_module.local_user_contexts(self.steam)))
 
   def run(self, tasks, app_settings, dry_run=False):
     if self.steam is None:

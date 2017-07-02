@@ -7,11 +7,10 @@ Copyright (c) 2014 Scott Rice. All rights reserved.
 """
 
 import abc
+from six import with_metaclass
 
 
-class BackingStore(object):
-  __metaclass__ = abc.ABCMeta
-
+class BackingStore(with_metaclass(abc.ABCMeta, object)):
   def __init__(self, path):
     self.path = path
 

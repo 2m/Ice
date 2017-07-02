@@ -16,7 +16,7 @@ from ice.cli import CommandLineRunner
 from ice.filesystem import FakeFilesystem
 from ice.persistence.config_file_backing_store import ConfigFileBackingStore
 
-from fixtures import SteamFixture, UserFixture
+from .fixtures import SteamFixture, UserFixture
 
 def json_to_shortcut(json):
   for field in ["name", "exe", "startdir", "icon", "tags"]:
@@ -67,7 +67,7 @@ class FakeEnvironment(object):
 
   def _load_config_file_overrides(self, directory):
     file_basenames = ['config', 'consoles', 'emulators']
-    filenames = map(lambda f: '%s.txt' % f, file_basenames)
+    filenames = ['%s.txt' % f for f in file_basenames]
     for f in file_basenames:
       self._use_config_file(f, self._test_config_path(directory, f))
 
@@ -120,12 +120,12 @@ class FakeEnvironment(object):
     expectations_path = os.path.join(self.testdata_dir, self.loaded_data, filename)
     with open(expectations_path) as f:
       expected_shortcuts_json = json.load(f)
-    return map(json_to_shortcut, expected_shortcuts_json)
+    return list(map(json_to_shortcut, expected_shortcuts_json))
 
   def expected_shortcuts(self, filename="shortcuts-expected.json"):
     """Returns the shortcuts which the test expects will exist after executing"""
     expected_shortcuts = self.load_shortcuts_from_json(filename)
-    return map(self._adjust_shortcut_exe, expected_shortcuts)
+    return list(map(self._adjust_shortcut_exe, expected_shortcuts))
 
   def set_user_shortcuts(self, uid, new_shortcuts):
     context = model.LocalUserContext(self.steam_fixture.get_steam(), uid)
@@ -155,4 +155,4 @@ class FakeEnvironment(object):
       success = True
     except Exception as e:
       success = False
-      print e
+      print(e)

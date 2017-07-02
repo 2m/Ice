@@ -51,10 +51,10 @@ class ConfigFileBackingStoreTests(unittest.TestCase):
     # key2=value
     # key2=value
     f = open(path, "w")
-    for section_name in sections_dict.keys():
+    for section_name in list(sections_dict.keys()):
       f.write("[%s]\n" % section_name)
       keyvalues = sections_dict[section_name]
-      for key in keyvalues.keys():
+      for key in list(keyvalues.keys()):
         value = keyvalues[key]
         f.write("%s=%s\n" % (key, value))
       f.write("\n")
@@ -69,7 +69,7 @@ class ConfigFileBackingStoreTests(unittest.TestCase):
   def test_empty_file(self):
     self.create_config_file(self.tempfile, {})
     cfbs = ConfigFileBackingStore(self.tempfile)
-    self.assertEquals(cfbs.identifiers(), [])
+    self.assertEqual(cfbs.identifiers(), [])
 
   def test_identifiers(self):
     self.create_config_file(self.tempfile, {
@@ -77,7 +77,7 @@ class ConfigFileBackingStoreTests(unittest.TestCase):
         "Whiplash": {},
     })
     cfbs = ConfigFileBackingStore(self.tempfile)
-    self.assertEquals(set(cfbs.identifiers()), set(["Iron Man", "Whiplash"]))
+    self.assertEqual(set(cfbs.identifiers()), set(["Iron Man", "Whiplash"]))
 
   def test_added_identifiers_show_up_in_subsequent_calls(self):
     self.create_config_file(self.tempfile, {})
@@ -193,8 +193,8 @@ class ConfigFileBackingStoreTests(unittest.TestCase):
     new_cfbs = ConfigFileBackingStore(self.tempfile)
     self.assertIn("Iron Man", new_cfbs.identifiers())
     self.assertIn("Whiplash", new_cfbs.identifiers())
-    self.assertEquals("good", new_cfbs.get("Iron Man", "alignment"))
-    self.assertEquals("evil", new_cfbs.get("Whiplash", "alignment"))
+    self.assertEqual("good", new_cfbs.get("Iron Man", "alignment"))
+    self.assertEqual("evil", new_cfbs.get("Whiplash", "alignment"))
 
   def test_raises_ioerror_when_permission_denied(self):
     self.create_config_file(self.tempfile, {})

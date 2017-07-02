@@ -2,18 +2,18 @@
 
 import os
 
-import configuration
-import model
-import paths
+from . import configuration
+from . import model
+from . import paths
 
-from logs import logger
-from gridproviders.combined_provider import CombinedProvider
-from gridproviders.consolegrid_provider import ConsoleGridProvider
-from gridproviders.local_provider import LocalProvider
-from persistence.backed_object_manager import BackedObjectManager
-from persistence.config_file_backing_store import ConfigFileBackingStore
-from persistence.adapters.console_adapter import ConsoleBackedObjectAdapter
-from persistence.adapters.emulator_adapter import EmulatorBackedObjectAdapter
+from .logs import logger
+from .gridproviders.combined_provider import CombinedProvider
+from .gridproviders.consolegrid_provider import ConsoleGridProvider
+from .gridproviders.local_provider import LocalProvider
+from .persistence.backed_object_manager import BackedObjectManager
+from .persistence.config_file_backing_store import ConfigFileBackingStore
+from .persistence.adapters.console_adapter import ConsoleBackedObjectAdapter
+from .persistence.adapters.emulator_adapter import EmulatorBackedObjectAdapter
 
 def find_settings_file(name, filesystem):
   """
@@ -75,8 +75,8 @@ def image_provider(config):
     "consolegrid": ConsoleGridProvider,
   }
   normalize = lambda s: s.strip().lower()
-  names = map(normalize, config.provider_spec.split(","))
-  instances = map(lambda name: providerByName[name](), names)
+  names = list(map(normalize, config.provider_spec.split(",")))
+  instances = [providerByName[name]() for name in names]
   logger.debug("Creating with component providers: %s" % str(instances))
   if len(instances) == 0:
     logger.error("No image providers specified. Ice will run, but will not \

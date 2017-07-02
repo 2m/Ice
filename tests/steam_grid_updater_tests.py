@@ -12,7 +12,7 @@ from ice import model
 from ice import roms
 from ice import steam_grid_updater
 
-from testinfra import fixtures
+from .testinfra import fixtures
 
 class SteamGridUpdaterTests(unittest.TestCase):
 

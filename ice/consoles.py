@@ -2,7 +2,7 @@
 
 import os
 
-import roms
+from . import roms
 
 def console_roms_directory(configuration, console):
   """
@@ -31,4 +31,4 @@ def path_is_rom(console, path):
 
   (name, ext) = os.path.splitext(path)
   valid_extensions = console.extensions.split(',')
-  return normalize(ext) in map(normalize, valid_extensions)
+  return normalize(ext) in list(map(normalize, valid_extensions))
